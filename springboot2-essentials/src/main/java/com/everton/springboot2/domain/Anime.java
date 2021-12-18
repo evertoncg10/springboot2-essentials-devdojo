@@ -1,18 +1,11 @@
 package com.everton.springboot2.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class Anime {
+	private Long id;
 	private String name;
-
-	public Anime() {
-	}
-
-	public Anime(String name) {
-		this.setName(name);
-	}
-
 }

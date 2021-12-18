@@ -3,6 +3,7 @@ package com.everton.springboot2.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.everton.springboot2.service.AnimeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,17 +15,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
 @Log4j2
 @RequiredArgsConstructor
 public class AnimeController {
 
 	private final DateUtil dateUtil;
+	private final AnimeService animeService;
 
-	@GetMapping(path = "list")
-	public List<Anime> list() {
+	@GetMapping
+	public List<Anime> listAll() {
 		log.info(dateUtil.formatLocalDateTimeToDataBaseStyle(LocalDateTime.now()));
-		return List.of(new Anime("DBZ"), new Anime("Berserk"), new Anime("Naruto"));
+		return animeService.listAll();
 
 	}
 }
