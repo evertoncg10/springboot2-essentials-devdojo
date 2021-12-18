@@ -11,7 +11,7 @@ import java.util.List;
 public class AnimeService {
     // private final AnimeRepository animeRepository;
 
-    private List<Anime> animes = List.of(new Anime(1L,"DBZ"), new Anime(2L,"Berserk"), new Anime(3L,"Naruto"));
+    private final List<Anime> animes = List.of(new Anime(1L,"DBZ"), new Anime(2L,"Berserk"), new Anime(3L,"Naruto"));
 
     public List<Anime> listAll() {
         return animes;
