@@ -1,5 +1,10 @@
 package com.everton.springboot2.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Anime {
 	private String name;
 
@@ -8,14 +13,6 @@ public class Anime {
 
 	public Anime(String name) {
 		this.setName(name);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }
