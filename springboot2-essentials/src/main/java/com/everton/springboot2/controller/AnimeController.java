@@ -3,6 +3,8 @@ package com.everton.springboot2.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.everton.springboot2.requests.AnimePostRequestBody;
+import com.everton.springboot2.requests.AnimePutRequestBody;
 import com.everton.springboot2.service.AnimeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +34,14 @@ public class AnimeController {
 
 	@GetMapping(path = "/{id}")
 	public  ResponseEntity<Anime> findById(@PathVariable long id) {
-		return ResponseEntity.ok(animeService.findById(id));
+		return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
 
 	}
 
 	@PostMapping
-	public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-		return new ResponseEntity(animeService.save(anime), HttpStatus.CREATED);
+	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+		//TODO: Verificar a utilização do Response Entity de forma adequada para não gerar warning
+		return new ResponseEntity(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(path = "/{id}")
@@ -48,8 +51,8 @@ public class AnimeController {
 	}
 
 	@PutMapping
-	public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-		animeService.replace(anime);
+	public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+		animeService.replace(animePutRequestBody);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
