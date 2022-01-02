@@ -1,18 +1,16 @@
 package com.everton.springboot2.service;
 
 import com.everton.springboot2.domain.Anime;
+import com.everton.springboot2.mapper.AnimeMapper;
 import com.everton.springboot2.repository.AnimeRepository;
 import com.everton.springboot2.requests.AnimePostRequestBody;
 import com.everton.springboot2.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +27,8 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
+        return animeRepository.save(anime);
     }
 
     public void delete(long id) {
@@ -38,11 +37,8 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         var saveAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        var anime = Anime.builder()
-                .id(saveAnime.getId())
-                .name(animePutRequestBody.getName())
-                .build();
-
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(saveAnime.getId());
         animeRepository.save(anime);
     }
 }
