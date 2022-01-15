@@ -45,7 +45,6 @@ public class AnimeController {
 	@PostMapping
 	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
 		//TODO: Verificar a utilização do Response Entity de forma adequada para não gerar warning
-		ResponseEntity.created().body(animeService.save(animePostRequestBody));
 		return new ResponseEntity(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 	}
 
