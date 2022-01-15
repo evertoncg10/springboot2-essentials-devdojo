@@ -1,20 +1,18 @@
 package com.everton.springboot2.controller;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.everton.springboot2.domain.Anime;
 import com.everton.springboot2.requests.AnimePostRequestBody;
 import com.everton.springboot2.requests.AnimePutRequestBody;
 import com.everton.springboot2.service.AnimeService;
+import com.everton.springboot2.util.DateUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.everton.springboot2.domain.Anime;
-import com.everton.springboot2.util.DateUtil;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("animes")
@@ -38,9 +36,16 @@ public class AnimeController {
 
 	}
 
+	@GetMapping(path = "/find")
+	public  ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
+		return ResponseEntity.ok(animeService.findByName(name));
+
+	}
+
 	@PostMapping
 	public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
 		//TODO: Verificar a utilização do Response Entity de forma adequada para não gerar warning
+		ResponseEntity.created().body(animeService.save(animePostRequestBody));
 		return new ResponseEntity(animeService.save(animePostRequestBody), HttpStatus.CREATED);
 	}
 
