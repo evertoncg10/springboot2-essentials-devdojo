@@ -12,6 +12,7 @@ import java.util.List;
 @Log4j2
 public class SpringClient {
     public static void main(String[] args) {
+        //List
         ResponseEntity<Anime> entity = new RestTemplate().getForEntity("http://localhost:8080/animes/{id}", Anime.class, 3);
         log.info(entity.getBody());
 
@@ -28,6 +29,8 @@ public class SpringClient {
                 });
         log.info(exchange.getBody());
 
+
+        // Save
 //        Anime kindom = Anime.builder().name("Kindom").build();
 //        Anime kindomSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", kindom, Anime.class);
 //        log.info(kindomSaved);
@@ -38,6 +41,25 @@ public class SpringClient {
                 new HttpEntity<>(samuraiChamplog, createJsonHeader()),
                 Anime.class);
         log.info("Saved anime {}", samuraiChamplogSaved);
+
+
+        //UPDATE
+        Anime animeToBeUpdated = samuraiChamplogSaved.getBody();
+        animeToBeUpdated.setName("Samurai Champlog 2");
+        ResponseEntity<Void> samuraiChamplogUpdated = new RestTemplate().exchange("http://localhost:8080/animes/",
+                HttpMethod.PUT,
+                new HttpEntity<>(animeToBeUpdated, createJsonHeader()),
+                Void.class);
+        log.info("Updated anime {}", samuraiChamplogUpdated);
+
+
+        //DELETE
+        ResponseEntity<Void> samuraiChamplogDeleted = new RestTemplate().exchange("http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                22);
+        log.info("Deleted anime {}", samuraiChamplogDeleted);
     }
 
     private static HttpHeaders createJsonHeader() {
