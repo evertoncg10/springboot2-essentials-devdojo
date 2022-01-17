@@ -33,7 +33,7 @@ public class AnimeController {
 	}
 
 	@GetMapping(path = "/all")
-	public  ResponseEntity<List<Anime>> listAll() {
+	public  ResponseEntity<List<Anime>> listAllNonPageable() {
 		log.info(dateUtil.formatLocalDateTimeToDataBaseStyle(LocalDateTime.now()));
 		return ResponseEntity.ok(animeService.listAllNonPageable());
 	}
